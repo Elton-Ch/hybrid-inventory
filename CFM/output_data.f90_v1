@@ -1,0 +1,37 @@
+      subroutine output_data
+
+      use global_data
+
+      implicit none
+
+     ! Variables
+      integer :: i, k_old, k_new
+      real*8  :: work_old, work_new
+
+     ! Body of output_data
+
+     k_old = 0
+     do i=1,ndat
+       if(abs( dev_dat(i,1) ).gt.(2.*sqrt(cdat(i,i))) ) k_old = k_old + 1
+     enddo
+     work_old = maxval( abs( dev_dat(:,1) ) )
+
+     k_new = 0
+     do i=1,ndat
+       if(abs( dev_dat(i,2) ).gt.(2.*sqrt(cdat(i,i))) ) k_new = k_new + 1
+     enddo
+     work_new = maxval( abs( dev_dat(:,2) ) )
+
+     write(*,*) k_old, work_old
+     write(*,*) k_new, work_new
+     open(1, file='../obs_profit/obs_'//year_of_obs//mon_of_obs//'.dat')
+     write(1,*) ndat
+     do i=1,ndat
+       write(1,'(i4,2x,i2,2x,i2,2x,i2,2x,i2,2x,4f15.4,2x,a13,2x,i3,3x,5f15.4)') obs_year(i), obs_month(i),obs_day(i),obs_hour(i),obs_min(i),&
+                                                         obs_lat(i), obs_lon(i), obs_alt(i), obs_val(i),st_name(i),obs_site(i),&
+                                                         dev_dat(i,1), dev_dat(i,2), sqrt(cdat(i,i)),chi_sq(i,1), chi_sq(i,2)
+ 
+     enddo
+     close(1)
+
+     end subroutine output_data

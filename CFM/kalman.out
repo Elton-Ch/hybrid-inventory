@@ -1,0 +1,5 @@
+ start reading
+ /work01/global_inversion/GEM_28reg/gem_inv/obs//obs_gvplus_v3.2/
+ /work01/global_inversion/GEM_28reg/gem_inv/obs//obs_list_exp01_gvplus_v3.2.txt
+FORTRAN PAUSE
+PAUSE prompt> 
